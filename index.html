@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="img/Favicon.png" rel="icon">
+    <title>Parallax Doki Doki</title>
+
+
+    <style>
+        body {
+            margin: 0;
+            background-color: #f3f3f3;
+        }
+
+        img {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #parallax-container {
+            position: relative;
+            height: 100vh;
+            /* Ocupa el 100% de la altura de la ventana */
+            overflow: hidden;
+            /* Oculta el desbordamiento */
+        }
+
+        #layer1 {
+            /*Debe de tenerlo cada imagen*/
+            position: absolute;
+            z-index: 1;
+            /* El más bajo el del fondo*/
+            background-image: url(img/Fondo.png);
+            top: 100;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+
+        #layer2 {
+            position: absolute;
+            /*Debe de tenerlo cada imagen para ver el órden de las capas*/
+            z-index: 2;
+            /* Medio */
+            top: 30%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+
+        #layer3 {
+            position: absolute;
+            z-index: 3;
+            /* El más alto */
+            top: 30%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+
+        #layer4 {
+            position: absolute;
+            z-index: 4;
+            /* El más alto */
+            top: 30%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        #layer5 {
+            position: absolute;
+            z-index: 5;
+            /* El más alto */
+            top: 30%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        #layer6 {
+            position: absolute;
+            z-index: 5;
+            /* El más alto */
+            bottom: 0;
+            right: 15%;
+            width: 100%;
+            height: 100%;
+        }
+
+        #layer7 {
+            position: absolute;
+            z-index: 5;
+            /* El más alto */
+            top: 20%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .completo {
+            width: 100%;
+            height: 50%;
+        }
+
+        /* --- Contenido (Debajo del Parallax) --- */
+        .contenido {
+            padding: 50px 20px;
+            background-color: #cacccd;
+            text-align: center;
+            min-height: 500px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <section class="contenido">
+
+    </section>
+
+    <div id="parallax-container">
+
+        <div id="layer1"></div>
+
+        <div id="layer2">
+            <img src="img/Yuri.png">
+        </div>
+
+        <div id="layer3">
+            <img src="img/Sayori.png">
+        </div>
+
+        <div id="layer4">
+            <img src="img/Natsuki.png">
+        </div>
+
+        <div id="layer5">
+            <img src="img/Monika.png">
+        </div>
+
+        <div id="layer6">
+            <img src="img/Consola.png">
+        </div>
+
+        <div id="layer7">
+            <img src="img/Texto.png">
+        </div>
+
+    </div>
+
+    <section class="contenido">
+
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            //Obtenemos cada capa del HTML
+            const layer1 = document.getElementById('layer1'); // Fondo
+            const layer2 = document.getElementById('layer2'); // Yuri (izquierda)
+            const layer3 = document.getElementById('layer3'); // Sayori (derecha)
+            const layer4 = document.getElementById('layer4'); // Natsuki (derecha)
+            const layer5 = document.getElementById('layer5'); // Monika (izquierda)
+            const layer6 = document.getElementById('layer6'); // Consola (arriba)
+            const layer7 = document.getElementById('layer7'); // Texto (abajo)
+
+            //Obtenemos el contenedor principal
+            const container = document.getElementById('parallax-container');
+
+            //Definimos las velocidades de desplazamiento
+            const speedSide = 0.2; // Movimiento lateral
+            const speedUp = 0.3;   // Hacia arriba
+            const speedDown = 0.3; // Hacia abajo
+
+            //Función que aplica el efecto parallax
+            function updateParallax() {
+
+                //Obtenemos la posición del contenedor respecto al top de la ventana
+                const scrollOffset = container.getBoundingClientRect().top;
+
+                //Multiplicamos el desplazamiento por la velocidad de cada capa
+
+                //IZQUIERDA (Monika y Yuri)
+                layer2.style.transform = `translate3d(${scrollOffset * speedSide}px, 0, 0)`;
+                layer5.style.transform = `translate3d(${scrollOffset * speedSide}px, 0, 0)`;
+
+                //DERECHA (Natsuki y Sayori)
+                layer3.style.transform = `translate3d(${scrollOffset * -speedSide}px, 0, 0)`;
+                layer4.style.transform = `translate3d(${scrollOffset * -speedSide}px, 0, 0)`;
+
+                //CONSOLA (se mueve hacia arriba)
+                layer6.style.transform = `translate3d(0, ${scrollOffset * -speedUp}px, 0)`;
+
+                //TEXTO (se mueve hacia abajo)
+                layer7.style.transform = `translate3d(0, ${scrollOffset * speedDown}px, 0)`;
+            }
+
+            //Agregamos el listener para el evento scroll
+            window.addEventListener('scroll', updateParallax);
+
+            //Ejecutamos la función al inicio
+            updateParallax();
+        });
+    </script>
+
+</body>
+
+</html>
